@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+<head>
+
+    <link href=static/style2.css rel="stylesheet">
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href={% static "img/lg.png" %} >
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,700|Roboto:400,900" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href={% static "lib/bootstrap/css/bootstrap.min.css" %} rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href={% static "lib/font-awesome/css/font-awesome.min.css" %} rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href={% static "css/style2.css" %} rel="stylesheet">
+
+    <title> Client Login  | UCF_FA </title>
+
+   </head>
+
+ </body>
+
+
+<form method="POST" action="login.html">
+             {% csrf_token %}
+    <header id="header">
+    <div class="container">
+
+      <div id="logo" class="align-content-lg-end">
+        <a href="home"><img src={% static "img/lg.png"%} alt="" title="" /></static/img></a>
+
+
+      </div>
+    </div>
+
+      <div class="col-md-12">
+        <h1>
+            Welcome to UCF Financial Advisory
+          </h1>
+
+        </p>
+      </div>
+       <br/><br/>
+    </div>
+      </div>
+
+             <label>Username : </label>
+               <input type="text" class="form-control" placeholder="Enter Username" name="username">
+             </div>
+             <div class="mb-3">
+
+            <label>Password : </label>
+            <input type="text" class="form-control" placeholder="Enter Password" name="password">
+             </div>
+            <button type="submit">Login</button>
+            <input type="checkbox" checked="checked">Remember Me
+             <br/><br/>
+            <a href="#">  Forgot Password? </a>&#160;&#160;&#160;
+            <a href="register.html"> Do Not Have an Account </a>
+</div>
+
+    </form>
+
+</html>
+
+
+

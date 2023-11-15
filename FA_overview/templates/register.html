@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+  <head>
+
+    <link href=static/style.css rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href={% static "img/lg.png" %} >
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,700|Roboto:400,900" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href={% static "lib/bootstrap/css/bootstrap.min.css" %} rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href={% static "lib/font-awesome/css/font-awesome.min.css" %} rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href={% static "css/style1.css" %} rel="stylesheet">
+    <title> Registration  | UCF_FA </title>
+
+   </head>
+<body>
+  <div class="wrapper">
+    <h2>Registration</h2>
+    <form method = "POST" action="register.html">
+         {% csrf_token %}
+        {{ form.as_p }}
+   <br/><br/>
+        <button type="submit" class ="btb btn-secondary">Register</button>
+    </form>
+  </div>
+</body>
+</html>
+
