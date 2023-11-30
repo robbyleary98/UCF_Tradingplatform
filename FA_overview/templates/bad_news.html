@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,700|Roboto:400,900" rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'img/lg.png' %}">
+
+    <title>News for Holdings</title>
+
+    <!-- Include your styles here -->
+    <style>
+        /* Your existing styles */
+    </style>
+</head>
+<body>
+    <div id="badNewsResult" class="shadow p-3 mb-5 bg-white rounded">
+        <h2>Potential Bad News for Holdings:</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Holding:</th>
+                    <th>Potential Bad News Title:</th>
+                    <th>Link:</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in bad_news_data %}
+                    {% if stock.BadNewsArticles %}
+                        {% for article in stock.BadNewsArticles %}
+                            <tr>
+                                <td>{{ stock.Ticker }}</td>
+                                <td>{{ article.Title }}</td>
+                                <td><a href="{{ article.Link }}" target="_blank">Link to article</a></td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td>{{ stock.Ticker }}</td>
+                            <td colspan="2">No potential bad news articles found.</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        window.onload = function() {
+            fetch('/bad_news.html/')
+            ')  // Update the URL to match your view's URL pattern
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('badNewsResult').innerHTML = `<p>${data.error}</p>`;
+                    } else {
+                        const resultDiv = document.getElementById('badNewsResult');
+                        let htmlContent = `<h2>Bad News Data:</h2><table class="table table-striped">`;
+                        htmlContent += `
+                            <thead>
+                                <tr>
+                                    <th>Stock Symbol</th>
+                                    <th>Bad News Title</th>
+                                    <th>Link</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                        data.bad_news_data.forEach(stock => {
+                            if (stock.BadNewsArticles.length > 0) {
+                                stock.BadNewsArticles.forEach(article => {
+                                    htmlContent += `
+                                        <tr>
+                                            <td>${stock.Ticker}</td>
+                                            <td>${article.Title}</td>
+                                            <td><a href="${article.Link}" target="_blank">Read more</a></td>
+                                        </tr>`;
+                                });
+                            } else {
+                                htmlContent += `
+                                    <tr>
+                                        <td>${stock.Ticker}</td>
+                                        <td colspan="2">No bad news articles found.</td>
+                                    </tr>`;
+                            }
+                        });
+                        htmlContent += `</tbody></table>`;
+                        resultDiv.innerHTML = htmlContent;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching bad news data:', error);
+                    document.getElementById('badNewsResult').innerHTML = `<p>Error fetching data.</p>`;
+                });
+        };
+    </script>
+
+    <!-- Bootstrap and jQuery libraries -->
+    <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
